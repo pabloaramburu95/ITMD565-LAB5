@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ITMD-565 Lab 4 - Canvas Drawing</title>
+	<style type="text/css">
+		#content-wrapper {
+			width: 600px;
+			margin: 0 auto;
+			text-align: center;
+		}
+		#canvasRun {
+			background-color: #c00;
+			border: 0;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<div id="content-wrapper">
+		<button id="canvasRun">Draw Canvas</button><br><br>
+		<canvas id="myCanvas" width="600" height="450"></canvas>
+	</div>
+	<script type="text/javascript">
+
+		document.getElementById("canvasRun").addEventListener("click", function(){
+			document.getElementById("canvasRun").disabled=true;
+			var canvas = document.getElementById("myCanvas");
+			var ctx = canvas.getContext("2d");
+			if (canvas.getContext){
+				window.requestAnimationFrame(draw);
+			}
+
+			var angle = 0;
+			function draw(){
+			
+				// Create gradient
+	      		grd = ctx.createLinearGradient(150, 300, 150, 0);
+	     		grd.addColorStop(0.000, 'rgba(0, 0, 0, 1)');
+	      		grd.addColorStop(1.000, 'rgba(255, 255, 255, 1)');
+	      		ctx.fillStyle = grd;
+	      		ctx.fillRect(0, 0, 600, 450);
+
+	      		// Create title and line
+	      		ctx.font = "32px Sans-Serif";
+	      		ctx.fillStyle = "red";
+	      		ctx.textAlign = "center";
+	      		ctx.fillText("ITMD 565 Canvas Lab", canvas.width/2, canvas.height/9);
+	      		ctx.beginPath();
+	      		ctx.setLineDash([]);
+	      		ctx.moveTo(40,70);
+	      		ctx.lineTo(580,70);
+	      		ctx.strokeStyle="#C80000";
+	      		ctx.lineWidth= 3;
+	      		ctx.stroke();
+	      		ctx.closePath(); 
+
+	      		// Create name and email
+	      		ctx.font = "14px Sans-Serif";
+	      		ctx.fillStyle="white";
+	      		ctx.textAlign="left";
+	      		ctx.fillText("Pablo Aramburu Garcia", canvas.width/20, 410);
+	      		ctx.fillText("paramburugarcia@hawk.iit.edu", canvas.width/20, 430);
+
+	      		// Create circle
+	      		ctx.beginPath();
+				ctx.setLineDash([]);
+				ctx.strokeStyle = "white";
+				ctx.fillStyle = "#0000C8";
+				ctx.arc(100, 145, 50, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.stroke();
+				ctx.closePath();
+
+				// Create triangle
+				ctx.beginPath();
+				ctx.setLineDash([]);
+				ctx.fillStyle = "#00C800";
+				ctx.strokeStyle = "#00C800";
+				ctx.moveTo(50,330);
+				ctx.lineTo(100, 235);
+				ctx.lineTo(150,330);
+				ctx.closePath();
+				ctx.fill();
+				ctx.stroke();
+
+				// Draw dots
+				ctx.beginPath();
+				ctx.setLineDash([]);
+				ctx.fillStyle = "white";
+				ctx.strokeStyle = "white";
+				ctx.fillRect(280, 253, 270, 88);
+				ctx.fill();
+				ctx.stroke();
+
+				ctx.setLineDash([10, 5]);
+				ctx.beginPath();
+				ctx.strokeStyle = "black";
+				ctx.beginPath();
+				ctx.moveTo(298, 301);
+				ctx.quadraticCurveTo(340, 250, 415, 301);
+				ctx.quadraticCurveTo(480, 340, 532, 301);
+				ctx.stroke();
+
+				// Square moving
+				ctx.save();
+				ctx.translate(500,140);
+				ctx.rotate(angle*(1/2));
+				ctx.beginPath();
+				ctx.lineWidth = 1;
+				ctx.setLineDash([]);
+				ctx.rect(-40, -40, 80, 80);
+				ctx.fillStyle = "#C80000";
+				ctx.fill();
+				ctx.lineWidth = 4;
+				ctx.strokeStyle = "white";
+				ctx.stroke();
+				angle += (Math.PI/290);
+				ctx.restore();
+
+				// Arc moving
+				ctx.save();
+				ctx.beginPath();
+				ctx.setLineDash([]);
+				ctx.arc(330, 145, 60,((Math.PI*0)+angle*10), ((Math.PI*1)+angle*10));
+				ctx.lineWidth = 20;
+				ctx.strokeStyle = '#FFA500';
+				ctx.stroke();
+				ctx.restore();
+	      		
+	      		window.requestAnimationFrame(draw);
+
+	      		// Insert photo
+	      		var im = new Image();
+	      		im.src="IIT_SAT_stack_186_white.png";
+	      		ctx.drawImage(im, 330, 375, 220, 55);
+			}
+		});
+		
+
+	</script>
+</body>
+</html>
